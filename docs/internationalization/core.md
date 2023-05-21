@@ -15,6 +15,7 @@ The `strings.json` contains translations for different things that the integrati
 | `device_automation` | Translations for device automations.              |
 | `issues`            | Translations for repairs issues.                  |
 | `options`           | Translations for the options flow.                |
+| `selectors`         | Selectors of the integration.                     |
 | `state`             | States of the integration, keyed by device class. |
 
 ### Title
@@ -52,6 +53,42 @@ The translation strings for the configuration flow handler and the option flow h
     }
   }
 }
+```
+
+### Selectors
+
+The translation for selectors are defined under the `selector` key. It supports option label translations for the selector `select`. The integration should set the `translation_key` on the selector select configuration. This allows translations on select selectors used in config and options flows. An example strings file below describes the different supported keys.
+
+```json
+{
+  "config": {
+    "flow_title": "Discovered Device ({host})",
+    "step": {
+      "init": {
+        "title": "The user visible title of the `init` step.",
+        "description": "Markdown that is shown with the step.",
+        "data": {
+          // Config flow selector select with options that support translations
+          "set_ca_cert": "Broker certificate validation"
+        }
+      }
+    }
+  },
+  // Translations for selector select to be used in option and config flows
+  "selector": {
+    // The key is linked to the `translation_key` that needs to be set
+    // using the SelectSelectorConfig class
+    "set_ca_cert": {
+      // The translations for the selector select option labels
+      "options": {
+        "off": "Off",
+        "auto": "Auto",
+        "custom": "Custom"
+      }
+    }
+  }
+}
+
 ```
 
 ### Device automations
@@ -112,9 +149,42 @@ The translation strings for repairs issues are defined under the `issues` key. A
 
 ### Entities
 
+#### Name of entities
+Integrations can provide translations for names of its entities. To do this, provide an `entity` object, that contains translations of the names and set the entity's `translation_key` property to a key under a domain in the `entity` object.
+If the entity's `translation_key` property is not `None` and the `entity` object provides a translated name, `EntityDescription.name` will be ignored.
+
+Entity components, like `sensor`, already have existing translations available that can be reused by referencing those. This includes common translations for entity names based on a device class. For example, it already has translations available for a "Temperature" sensor that can be referenced. Referencing existing translations is preferred, as it prevents translating the same thing multiple times.
+
+The following example `strings.json` is for a `sensor` entity with its `translation_key` property set to `thermostat_mode`:
+```json
+{
+  "entity": {
+    "sensor": {
+      "thermostat_mode": {
+        "name": "Thermostat mode"
+      }
+    }
+  }
+}
+```
+
+The following example `strings.json` is for a `sensor` entity with its `translation_key` property set to `temperature_sensor` where a shared translation provided by the `sensor` integration is used:
+
+```json
+{
+  "entity": {
+    "sensor": {
+      "temperature_sensor": {
+        "name": "[%key:component::sensor::entity_component::temperature::name%]"
+      }
+    }
+  }
+}
+```
+
 #### State of entities
 
-Integrations can provide translations for states of its entities under other integrations like sensor if the base entity component does not provide translations, or if the translation provided by the base entity component do not match the integration's entity. To do this, provide an `entity` dictionary, that contains translations for states and set the entity's `translation_key` property to a key under a domain in the `entity` dictionary.
+Integrations can provide translations for states of its entities under other integrations like sensor if the base entity component does not provide translations, or if the translation provided by the base entity component do not match the integration's entity. To do this, provide an `entity` object, that contains translations for states and set the entity's `translation_key` property to a key under a domain in the `entity` object.
 
 To differentiate entities and their translations, provide different translation keys. The following example `strings.json` is for a Moon domain `sensor` entity with its `translation_key` property set to `phase`:
 
@@ -137,7 +207,7 @@ To differentiate entities and their translations, provide different translation 
 
 #### State of entity components
 
-If your integration provides entities under its domain, you will want to translate the states. You do this by offering a `state` dictionary, that contains translations for states with different device classes. The key `_` is used for entities without a device class.
+If your integration provides entities under its domain, you will want to translate the states. You do this by offering a `state` object, that contains translations for states with different device classes. The key `_` is used for entities without a device class.
 
 ```json
 {
@@ -160,11 +230,7 @@ If your integration provides entities under its domain, you will want to transla
 
 #### Entity state attributes
 
-:::info
-Translation of entity state attributes also requires frontend support, which is currently only available for `climate` entities.
-:::
-
-Integrations can provide translations for its entities' state attributes under other integrations like sensor if the base entity component does not provide translations, or if the translation provided by the base entity component do not match the integration's entity. To do this, provide an `entity` dictionary, that contains translations for entity state attributes and set the entity's `translation_key` property to a key under a domain in the `entity` dictionary.
+Integrations can provide translations for its entities' state attributes under other integrations like sensor if the base entity component does not provide translations, or if the translation provided by the base entity component do not match the integration's entity. To do this, provide an `entity` object, that contains translations for entity state attributes and set the entity's `translation_key` property to a key under a domain in the `entity` object.
 
 To differentiate entities and their translations, provide different translation keys. The following example `strings.json` is for a `demo` domain `climate` entity with its `translation_key` property set to `ubercool`, which has custom `fan_mode` and `swing_mode` settings:
 
@@ -205,7 +271,7 @@ To differentiate entities and their translations, provide different translation 
 Translation of entity attribute names and states also requires frontend support, which is currently only available for `climate` entities.
 :::
 
-If your integration provides entities under its domain, you will want to translate the name of entity attributes and also entity state attributes. You do this by offering a `state_attributes` dictionary, that contains translations for entity attributes with different device classes. The key `_` is used for entities without a device class.
+If your integration provides entities under its domain, you will want to translate the name of entity attributes and also entity state attributes. You do this by offering a `state_attributes` object, that contains translations for entity attributes with different device classes. The key `_` is used for entities without a device class.
 
 ```json
 {

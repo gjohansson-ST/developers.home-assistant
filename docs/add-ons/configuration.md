@@ -21,7 +21,7 @@ addon_name/
 ```
 
 :::note
-Translation files, `config`  and `build` all support `.json`, `.yml` and `.yaml` as the file type.
+Translation files, `config` and `build` all support `.json`, `.yml` and `.yaml` as the file type.
 
 To keep it simple all examples use `.yaml`
 :::
@@ -142,13 +142,14 @@ Note:  Avoid the use of this filename for anything other than add-on configurati
 | `host_ipc` | bool | `false` | Allow the IPC namespace to be shared with others.
 | `host_dbus` | bool | `false` | Map the host D-Bus service into the add-on.
 | `host_pid` | bool | `false` | Allow the container to run on the host PID namespace. Works only for not protected add-ons. **Warning:** Does not work with S6 Overlay. If need this to be `true` and you use the normal add-on base image you disable S6 by overriding `/init`. Or use an alternate base image.
+| `host_uts` | bool | `false` | Use the hosts UTS namespace.
 | `devices` | list | | Device list to map into the add-on. Format is: `<path_on_host>`. E.g., `/dev/ttyAMA0`
 | `homeassistant` | string | | Pin a minimum required Home Assistant Core version for the add-on. Value is a version string like `2022.10.5`.
 | `hassio_role` | str | `default` |Role-based access to Supervisor API. Available: `default`, `homeassistant`, `backup`, `manager` or `admin`
 | `hassio_api` | bool | `false` | This add-on can access the Supervisor's REST API. Use `http://supervisor`.
 | `homeassistant_api` | bool | `false` | This add-on can access the Home Assistant REST API proxy. Use `http://supervisor/core/api`.
 | `docker_api` | bool | `false` | Allow read-only access to the Docker API for the add-on. Works only for not protected add-ons.
-| `privileged` | list | | Privilege for access to hardware/system. Available access: `NET_ADMIN`, `SYS_ADMIN`, `SYS_RAWIO`, `SYS_TIME`, `SYS_NICE`, `SYS_RESOURCE`, `SYS_PTRACE`, `SYS_MODULE` or `DAC_READ_SEARCH`
+| `privileged` | list | | Privilege for access to hardware/system. Available access: `NET_ADMIN`, `NET_RAW`, `SYS_ADMIN`, `SYS_RAWIO`, `SYS_TIME`, `SYS_NICE`, `SYS_RESOURCE`, `SYS_PTRACE`, `SYS_MODULE` or `DAC_READ_SEARCH`
 | `full_access` | bool | `false` | Give full access to hardware like the privileged mode in Docker. Works only for not protected add-ons. Consider using other add-on options instead of this, like `devices`. If you enable this option, don't add `devices`, `uart`, `usb` or `gpio` as this is not needed.
 | `apparmor` | bool/string | `false` | Enable or disable AppArmor support. If it is enabled, you can also use custom profiles with the name of the profile.
 | `map` | list | | List of Home Assistant directories to bind mount into your container. Possible values: `config`, `ssl`, `addons`, `backup`, `share` or `media`. Defaults to `ro`, which you can change by adding `:rw` to the end of the name.

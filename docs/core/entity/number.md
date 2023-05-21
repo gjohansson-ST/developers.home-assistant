@@ -32,7 +32,7 @@ If specifying a device class, your number entity will need to also return the co
 | Constant | Supported units | Description
 | ---- | ---- | -----------
 | `NumberDeviceClass.APPARANT_POWER` | VA | Apparent power |
-| `NumberDeviceClass.AQI` | | Air Quality Index
+| `NumberDeviceClass.AQI` | None | Air Quality Index
 | `NumberDeviceClass.ATMOSPHERIC_PRESSURE` | cbar, bar, hPa, inHg, kPa, mbar, Pa, psi | Atmospheric pressure, statistics will be stored in Pa.
 | `NumberDeviceClass.BATTERY` | % | Percentage of battery that is left
 | `NumberDeviceClass.CARBON_DIOXIDE` | ppm | Concentration of carbon dioxide.
@@ -41,7 +41,8 @@ If specifying a device class, your number entity will need to also return the co
 | `NumberDeviceClass.DATA_RATE` | bit/s, kbit/s, Mbit/s, Gbit/s, B/s, kB/s, MB/s, GB/s, KiB/s, MiB/s, GiB/s | Data rate
 | `NumberDeviceClass.DATA_SIZE` | bit, kbit, Mbit, Gbit, B, kB, MB, GB, TB, PB, EB, ZB, YB, KiB, MiB, GiB, TiB, PiB, EiB, ZiB, YiB | Data size
 | `NumberDeviceClass.DISTANCE` | km, m, cm, mm, mi, yd, in | Generic distance
-| `NumberDeviceClass.ENERGY` | Wh, kWh, MWh | Energy. Represents _power_ over _time_. Not to be confused with `power`.
+| `NumberDeviceClass.ENERGY` | Wh, kWh, MWh, MJ, GJ | Energy, this device class should used to represent energy consumption, for example an electricity meter. Represents _power_ over _time_. Not to be confused with `power`.
+| `NumberDeviceClass.ENERGY_STORAGE` | Wh, kWh, MWh, MJ, GJ | Stored energy, this device class should be used to represent stored energy, for example the amount of electric energy currently stored in a battery or the capacity of a battery. Represents _power_ over _time_. Not to be confused with `power`.
 | `NumberDeviceClass.FREQUENCY` | Hz, kHz, MHz, GHz | Frequency
 | `NumberDeviceClass.GAS` | m³, ft³, CCF | Volume of gas. Gas consumption measured as energy in kWh instead of a volume should be classified as energy.
 | `NumberDeviceClass.HUMIDITY` | % | Relative humidity
@@ -57,7 +58,7 @@ If specifying a device class, your number entity will need to also return the co
 | `NumberDeviceClass.PM25` | µg/m³ | Concentration of particulate matter less than 2.5 micrometers |
 | `NumberDeviceClass.PM10` | µg/m³ | Concentration of particulate matter less than 10 micrometers |
 | `NumberDeviceClass.POWER` | W, kW | Power.
-| `NumberDeviceClass.POWER_FACTOR` | % | Power Factor
+| `NumberDeviceClass.POWER_FACTOR` | %, None | Power Factor
 | `NumberDeviceClass.PRECIPITATION` | cm, in, mm | Precipitation
 | `NumberDeviceClass.PRECIPITATION_INTENSITY` | in/d, in/h, mm/d, mm/h | Precipitation intensity
 | `NumberDeviceClass.PRESSURE` | cbar, bar, hPa, inHg, kPa, mbar, Pa, psi | Pressure.
@@ -66,10 +67,11 @@ If specifying a device class, your number entity will need to also return the co
 | `NumberDeviceClass.SOUND_PRESSURE` | dB, dBA | Sound pressure
 | `NumberDeviceClass.SPEED` | ft/s, in/d, in/h, km/h, kn, m/s, mph, mm/d | Generic speed
 | `NumberDeviceClass.SULPHUR_DIOXIDE` | µg/m³ | Concentration of sulphure dioxide |
-| `NumberDeviceClass.TEMPERATURE` | °C, °F | Temperature.
+| `NumberDeviceClass.TEMPERATURE` | °C, °F, K | Temperature.
 | `NumberDeviceClass.VOLATILE_ORGANIC_COMPOUNDS` | µg/m³ | Concentration of volatile organic compounds
 | `NumberDeviceClass.VOLTAGE` | V, mV | Voltage
-| `NumberDeviceClass.VOLUME` | L, mL, gal, fl. oz., m³, ft³, CCF | Generic volume
+| `NumberDeviceClass.VOLUME` | L, mL, gal, fl. oz., m³, ft³, CCF | Generic volume, this device class should be used to represent a consumption, for example the amount of fuel consumed by a vehicle.
+| `NumberDeviceClass.VOLUME_STORAGE` | L, mL, gal, fl. oz., m³, ft³, CCF | Generic stored volume, this device class should be used to represent a stored volume, for example the amount of fuel in a fuel tank.
 | `NumberDeviceClass.WATER` | L, gal, m³, ft³, CCF | Water consumption
 | `NumberDeviceClass.WEIGHT` | kg, g, mg, µg, oz, lb, st | Generic mass; `weight` is used instead of `mass` to fit with every day language.
 | `NumberDeviceClass.WIND_SPEED` | ft/s, km/h, kn, m/s, mph | Wind speed
